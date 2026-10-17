@@ -5,6 +5,7 @@ out/
 dist/
 .test-out/
 test.js
+.agnes/
 *.log
 *.vsix
 .git/

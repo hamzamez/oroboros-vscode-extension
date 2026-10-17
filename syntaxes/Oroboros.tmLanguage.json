@@ -106,6 +106,7 @@
         { "match": "\\b(niche|narrow|word|library|ref|limbs|big|shift|loop|loop2|iterate)\\b", "name": "keyword.other.repr-choice.oroboros" },
         { "include": "#markers" },
         { "match": "\\b(structural|fold_range|make_vec|backend|artifact|link|data|fact|max_len|underlying|include|implements|const|type|word|niche|narrow|limbs|shift|library)\\b", "name": "keyword.other.target-data.oroboros" },
+        { "include": "#set-operators" },
         { "include": "#operators" }
       ]
     },
@@ -289,6 +290,7 @@
     "expression": {
       "patterns": [
         { "include": "#comment" },
+        { "include": "#set-operators" },
         { "include": "#control" },
         { "include": "#loop" },
         { "include": "#case" },
@@ -506,7 +508,7 @@
         { "match": "(&&|\\|\\||!)", "name": "keyword.operator.logic.oroboros" },
         { "match": "(\\^|\\*|/|%)", "name": "keyword.operator.arithmetic.oroboros" },
         { "match": "(\\+\\+|\\+|-)", "name": "keyword.operator.arithmetic.oroboros" },
-        { "match": "(∈|∉|⊆|⊂|∀|∃|⇒|⇔|∪|∩|∖|×)", "name": "keyword.operator.math.oroboros" },
+        { "match": "(∈|∉|⊆|⊂|∀|∃|⇒|⇔)", "name": "keyword.operator.math.oroboros" },
         { "match": "(:|,|;)", "name": "punctuation.terminator.oroboros" }
       ]
     }
