@@ -37,7 +37,8 @@
     "use-path": {
       "patterns": [
         { "match": "\\b(as)\\b", "name": "keyword.control.import.as.oroboros" },
-        { "include": "#module-path" }
+        { "include": "#module-path" },
+        { "match": "\\b(result)\\b", "name": "variable.language.import-qualifier.oroboros" }
       ]
     },
 
@@ -73,7 +74,7 @@
 
     "module-path": {
       "match": "(?:[A-Za-z_$][A-Za-z0-9_\\-]*)(?:/[A-Za-z_$][A-Za-z0-9_\\-]*)*",
-      "name": "entity.name.type.module.oroboros"
+      "name": "support.module.oroboros"
     },
 
     "axiom": {
@@ -415,8 +416,25 @@
         { "include": "#tags" },
         { "include": "#set-expr" },
         {
+          "name": "meta.qualified-result-type.oroboros",
+          "begin": "(result)\\.(Result)\\b",
+          "beginCaptures": {
+            "1": { "name": "variable.language.import-qualifier.oroboros" },
+            "2": { "name": "entity.name.type.oroboros" }
+          },
+          "end": "\\)",
+          "endCaptures": { "0": { "name": "punctuation.definition.type.end.oroboros" } },
+          "patterns": [
+            { "include": "#type-expr" },
+            { "include": "#range" },
+            { "include": "#identifier" },
+            { "include": "#literal" },
+            { "include": "#operators" }
+          ]
+        },
+        {
           "name": "meta.type-application.oroboros",
-          "begin": "(Array|Map|Buffer|Cell|Option|result\\.Result|prod|cell)\\(",
+          "begin": "(Array|Map|Buffer|Cell|Option|prod|cell)\\(",
           "beginCaptures": { "0": { "name": "entity.name.type.oroboros" } },
           "end": "\\)",
           "endCaptures": { "0": { "name": "punctuation.definition.type.end.oroboros" } },
@@ -433,7 +451,7 @@
 
     "type-name": {
       "name": "entity.name.type.oroboros",
-      "match": "\\b(Int|F64|f64|Bool|String|Any|error|num|word|Array|Map|Buffer|Cell|Option|prod|result|byte|rune|char|jint)\\b"
+      "match": "\\b(Int|F64|f64|Bool|String|Any|error|num|word|Array|Map|Buffer|Cell|Option|prod|Result|byte|rune|char|jint)\\b"
     },
 
     "range": {
