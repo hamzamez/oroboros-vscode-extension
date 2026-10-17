@@ -6,6 +6,7 @@ out/
 dist/
 # local tooling / scratch
 .test-out/
+test.js
 *.log
 # editor / OS
 .DS_Store

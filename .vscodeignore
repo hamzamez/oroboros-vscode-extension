@@ -1,0 +1,13 @@
+# Dev tooling / scratch — never ship
+node_modules/
+.vscode-test/
+out/
+dist/
+.test-out/
+test.js
+*.log
+*.vsix
+.git/
+.gitignore
+*.wasm
+package-lock.json
