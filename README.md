@@ -1,7 +1,7 @@
 # Oroboros (.oro)
 
 A Visual Studio Code extension providing TextMate syntax highlighting for
-[Oroboros](https://github.com/example/oroboros) — a small language that
+[Oroboros](https://github.com/hamzamez/Oroboros) — a small language that
 compiles to Go, JavaScript, the JVM and x86-64 assembly.
 
 ## What it highlights
