@@ -1,0 +1,511 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vscode-grammars/main/schemas/grammar.json",
+  "name": "Oroboros",
+  "scopeName": "source.oroboros",
+
+  "patterns": [
+    { "include": "#comment" },
+
+    { "include": "#use" },
+    { "include": "#provides" },
+    { "include": "#module" },
+    { "include": "#axiom" },
+
+    { "include": "#target-data" },
+    { "include": "#declaration" },
+    { "include": "#value-declaration" },
+
+    { "include": "#expression" }
+  ],
+
+  "repository": {
+
+    "comment": {
+      "name": "comment.line.oroboros",
+      "match": "//.*$"
+    },
+
+    "use": {
+      "name": "meta.use.oroboros",
+      "match": "^\\s*(use)\\b",
+      "captures": { "1": { "name": "keyword.control.import.oroboros" } },
+      "patterns": [
+        { "include": "#use-path" }
+      ]
+    },
+
+    "use-path": {
+      "patterns": [
+        { "match": "\\b(as)\\b", "name": "keyword.control.import.as.oroboros" },
+        { "include": "#module-path" }
+      ]
+    },
+
+    "module": {
+      "name": "meta.module.oroboros",
+      "begin": "^\\s*(module|provides)\\b",
+      "beginCaptures": {
+        "0": { "name": "keyword.module.oroboros" },
+        "1": { "name": "keyword.module.oroboros" }
+      },
+      "end": "(?=^\\s*})|^\\s*$",
+      "patterns": [
+        { "include": "#module-path" },
+        { "include": "#block" },
+        { "include": "#expression" },
+        { "include": "#comment" }
+      ]
+    },
+
+    "provides": {
+      "name": "meta.provides.oroboros",
+      "begin": "^\\s*(provides)\\b",
+      "beginCaptures": { "1": { "name": "keyword.module.oroboros" } },
+      "end": "(?=^\\s*})|^\\s*$",
+      "patterns": [
+        { "include": "#identifier" },
+        { "include": "#module-path" },
+        { "include": "#block" },
+        { "include": "#expression" },
+        { "include": "#comment" }
+      ]
+    },
+
+    "module-path": {
+      "match": "(?:[A-Za-z_$][A-Za-z0-9_\\-]*)(?:/[A-Za-z_$][A-Za-z0-9_\\-]*)*",
+      "name": "entity.name.type.module.oroboros"
+    },
+
+    "axiom": {
+      "name": "meta.axiom.oroboros",
+      "match": "^\\s*(axiom)\\b",
+      "captures": { "1": { "name": "keyword.other.axiom.oroboros" } },
+      "patterns": [
+        { "include": "#set-operators" },
+        { "include": "#type-name" },
+        { "include": "#identifier" },
+        { "include": "#string" }
+      ]
+    },
+
+    "target-data": {
+      "name": "meta.target-data.oroboros",
+      "begin": "^\\s*(repr|set|axiom|structural|build|backend|artifact|link|fact|data|type|const|underlying|max_len|big_repr|int_repr|include|implements|host)\\b",
+      "beginCaptures": { "1": { "name": "keyword.other.target-data.oroboros" } },
+      "end": "(?=$)|(?=//)",
+      "patterns": [
+        { "include": "#type-name" },
+        { "include": "#identifier" },
+        { "include": "#quoted-name" },
+        { "include": "#range" },
+        { "include": "#literal" },
+        { "include": "#string" },
+        { "include": "#host-body" },
+        { "match": "\\b(host)\\b", "name": "keyword.other.host.oroboros" },
+        { "match": "\\b(expr|stmt)\\b", "name": "keyword.other.host-kind.oroboros" },
+        { "match": "\\b(niche|narrow|word|library|ref|limbs|big|shift|loop|loop2|iterate)\\b", "name": "keyword.other.repr-choice.oroboros" },
+        { "include": "#markers" },
+        { "match": "\\b(structural|fold_range|make_vec|backend|artifact|link|data|fact|max_len|underlying|include|implements|const|type|word|niche|narrow|limbs|shift|library)\\b", "name": "keyword.other.target-data.oroboros" },
+        { "include": "#operators" }
+      ]
+    },
+
+    "declaration": {
+      "name": "meta.declaration.oroboros",
+      "begin": "^\\s*(private|export)?\\s*(fn|spec|lemma|set)\\b",
+      "beginCaptures": {
+        "1": { "name": "keyword.other.visibility.oroboros" },
+        "2": { "name": "keyword.other.declaration.oroboros" }
+      },
+      "end": "(?=$)|(?=//)",
+      "patterns": [
+        { "include": "#declaration-body" }
+      ]
+    },
+
+    "value-declaration": {
+      "name": "meta.value-declaration.oroboros",
+      "begin": "^((private|export)\\s+)?([A-Za-z_$][A-Za-z0-9_\\-]*)\\s*=\\s*",
+      "beginCaptures": {
+        "3": { "name": "variable.other.value-declaration.oroboros" }
+      },
+      "end": "(?=$)|(?=//)",
+      "patterns": [
+        { "include": "#expression" }
+      ]
+    },
+
+    "declaration-body": {
+      "patterns": [
+        { "include": "#comment" },
+        { "include": "#markers" },
+        { "include": "#identifier" },
+        { "include": "#quoted-name" },
+        { "include": "#parameter-list" },
+        { "include": "#result-list" },
+        { "include": "#clause" },
+        { "include": "#literal" },
+        { "include": "#string" },
+        { "include": "#operators" },
+        { "include": "#tags" },
+        { "include": "#host-body" },
+        { "include": "#type-expr" },
+        { "include": "#block" }
+      ]
+    },
+
+    "parameter-list": {
+      "name": "meta.parameters.oroboros",
+      "begin": "\\(",
+      "end": "\\)",
+      "beginCaptures": { "0": { "name": "punctuation.definition.parameters.begin.oroboros" } },
+      "endCaptures": { "0": { "name": "punctuation.definition.parameters.end.oroboros" } },
+      "patterns": [
+        { "include": "#comment" },
+        { "include": "#type-expr" },
+        { "include": "#range" },
+        { "include": "#set-expr" },
+        { "include": "#tags" },
+        { "include": "#literal" },
+        { "match": "\\b(in|out|linear|inout)\\b", "name": "keyword.other.modifier.oroboros" },
+        { "match": "(∈|⊆)", "name": "keyword.operator.ownership.oroboros" },
+        { "include": "#type-name" },
+        { "include": "#identifier" },
+        { "match": "(,)", "name": "punctuation.terminator.oroboros" }
+      ]
+    },
+
+    "result-list": {
+      "name": "meta.results.oroboros",
+      "begin": "\\(",
+      "end": "\\)",
+      "beginCaptures": { "0": { "name": "punctuation.definition.results.begin.oroboros" } },
+      "endCaptures": { "0": { "name": "punctuation.definition.results.end.oroboros" } },
+      "patterns": [
+        { "include": "#comment" },
+        { "include": "#type-expr" },
+        { "include": "#range" },
+        { "include": "#set-expr" },
+        { "include": "#tags" },
+        { "include": "#literal" },
+        { "include": "#type-name" },
+        { "include": "#identifier" },
+        { "include": "#operators" },
+        { "match": "(∈|⊆)", "name": "keyword.operator.ownership.oroboros" }
+      ]
+    },
+
+    "markers": {
+      "match": "\\b(pure|where|ensure|invariant|index|variadic|success|relevant|comma_ok)\\b",
+      "name": "keyword.other.modifier.oroboros"
+    },
+
+    "decl-modifier": {
+      "match": "\\b(else|when|invariant|where|ensure|pure)\\b",
+      "name": "keyword.control.modifier.oroboros"
+    },
+
+    "clause": {
+      "patterns": [
+        {
+          "begin": "\\b(where|ensure|invariant)\\b",
+          "beginCaptures": { "0": { "name": "keyword.other.clause.oroboros" } },
+          "end": "(?=\\s*\\{|\\s*\\)|\\s*$|\\s*//)",
+          "patterns": [
+            { "include": "#formula" },
+            { "include": "#expression" }
+          ]
+        }
+      ]
+    },
+
+    "formula": {
+      "patterns": [
+        { "match": "(∀|∃|\\bA\\b|\\bE\\b)", "name": "keyword.other.quantifier.oroboros" },
+        { "match": "(⇒|⇔|=>|<=>)", "name": "keyword.operator.logic.oroboros" },
+        { "match": "(==|!=|<=|>=|<|>|∈|∉|⊆|⊂)", "name": "keyword.operator.comparison.oroboros" },
+        { "match": "(&&|\\|\\||!)", "name": "keyword.operator.logic.oroboros" },
+        { "include": "#set-expr" },
+        { "include": "#type-expr" },
+        { "include": "#tags" },
+        { "include": "#identifier" },
+        { "include": "#literal" }
+      ]
+    },
+
+    "host-body": {
+      "name": "meta.host-body.oroboros",
+      "begin": "\\b(host)\\b",
+      "beginCaptures": { "1": { "name": "keyword.other.host.oroboros" } },
+      "end": "(?=$)|(?=//)",
+      "patterns": [
+        { "match": "\\b(expr|stmt)\\b", "name": "keyword.other.host-kind.oroboros" },
+        { "include": "#string" },
+        { "include": "#quoted-name" },
+        { "match": "\\b(import|lib|checked|jump|comma_ok)\\b", "name": "keyword.other.host-clause.oroboros" },
+        { "include": "#identifier" }
+      ]
+    },
+
+    "block": {
+      "name": "meta.block.oroboros",
+      "begin": "\\{",
+      "end": "\\}",
+      "beginCaptures": { "0": { "name": "punctuation.definition.block.begin.oroboros" } },
+      "endCaptures": { "0": { "name": "punctuation.definition.block.end.oroboros" } },
+      "patterns": [
+        { "include": "#comment" },
+        { "include": "#statement" },
+        { "include": "#expression" }
+      ]
+    },
+
+    "statement": {
+      "patterns": [
+        { "match": "^\\s*(var)\\b", "captures": { "1": { "name": "keyword.other.var.oroboros" } } },
+        { "match": "\\b(expect|assert|ignore)\\b", "name": "keyword.other.statement.oroboros" },
+        { "match": "\\b(fn)\\b", "name": "keyword.other.statement.oroboros" },
+        { "match": "\\b(again)\\b", "name": "keyword.control.again.oroboros" },
+        { "include": "#tags" },
+        { "include": "#identifier" },
+        { "include": "#indexing" },
+        { "match": "(:=|=|->|:|,|;)", "name": "keyword.operator.assignment.oroboros" },
+        { "include": "#expression" }
+      ]
+    },
+
+    "indexing": {
+      "begin": "\\[",
+      "end": "\\]",
+      "beginCaptures": { "0": { "name": "punctuation.definition.index.begin.oroboros" } },
+      "endCaptures": { "0": { "name": "punctuation.definition.index.end.oroboros" } },
+      "patterns": [
+        { "include": "#expression" }
+      ]
+    },
+
+    "expression": {
+      "patterns": [
+        { "include": "#comment" },
+        { "include": "#control" },
+        { "include": "#loop" },
+        { "include": "#case" },
+        { "include": "#tags" },
+        { "include": "#string" },
+        { "include": "#literal" },
+        { "include": "#spread" },
+        { "include": "#set-former" },
+        { "include": "#set-expr" },
+        { "include": "#type-expr" },
+        { "include": "#qualified-name" },
+        { "include": "#identifier" },
+        { "include": "#operators" }
+      ]
+    },
+
+    "control": {
+      "patterns": [
+        {
+          "name": "meta.if.oroboros",
+          "begin": "\\b(if|else)\\b",
+          "beginCaptures": { "0": { "name": "keyword.control.if.oroboros" } },
+          "patterns": [
+            { "include": "#expression" },
+            { "include": "#block" }
+          ]
+        },
+        {
+          "match": "\\b(try|expect|assert|ignore|seq|let|and|or|not|cond)\\b",
+          "name": "keyword.other.control.oroboros"
+        },
+        {
+          "name": "meta.lambda.oroboros",
+          "begin": "(fn)\\b(?=\\s*[\\(a-zA-Z_$])",
+          "beginCaptures": { "1": { "name": "keyword.other.lambda.oroboros" } },
+          "end": "(?=^\\s*(;|//)|^$)|(?<=\\})",
+          "patterns": [
+            { "include": "#parameter-list" },
+            { "include": "#result-list" },
+            { "include": "#markers" },
+            { "include": "#clause" },
+            { "include": "#block" },
+            { "include": "#declaration-body" }
+          ]
+        }
+      ]
+    },
+
+    "loop": {
+      "name": "meta.loop.oroboros",
+      "begin": "\\b(loop)\\b",
+      "beginCaptures": { "1": { "name": "keyword.control.loop.oroboros" } },
+      "end": "(?<=\\})",
+      "patterns": [
+        { "include": "#comment" },
+        { "match": "\\b(else|invariant|when)\\b", "name": "keyword.control.loop.oroboros" },
+        { "include": "#identifier" },
+        { "include": "#literal" },
+        { "include": "#operators" },
+        { "include": "#control" },
+        { "match": "(->)", "name": "punctuation.control.oroboros" }
+      ]
+    },
+
+    "case": {
+      "name": "meta.case.oroboros",
+      "begin": "\\b(case)\\b",
+      "beginCaptures": { "1": { "name": "keyword.control.case.oroboros" } },
+      "end": "(?<=\\})",
+      "patterns": [
+        { "include": "#comment" },
+        { "include": "#tags" },
+        { "include": "#expression" },
+        { "match": "(->)", "name": "punctuation.control.oroboros" },
+        { "match": "\\b(else|when)\\b", "name": "keyword.control.case.oroboros" }
+      ]
+    },
+
+    "tags": {
+      "name": "constant.other.tag.oroboros",
+      "match": "'[a-zA-Z_][a-zA-Z0-9_]*"
+    },
+
+    "spread": {
+      "name": "keyword.operator.spread.oroboros",
+      "match": "(\\.\\.\\.)"
+    },
+
+    "set-former": {
+      "name": "meta.set-former.oroboros",
+      "begin": "\\b(array|set|map)\\b\\s*\\{",
+      "beginCaptures": {
+        "1": { "name": "keyword.other.former.oroboros" },
+        "2": { "name": "punctuation.definition.block.begin.oroboros" }
+      },
+      "end": "\\}",
+      "endCaptures": { "0": { "name": "punctuation.definition.block.end.oroboros" } },
+      "patterns": [
+        { "include": "#comment" },
+        { "include": "#expression" },
+        { "match": "(:)", "name": "punctuation.definition.former-separator.oroboros" }
+      ]
+    },
+
+    "set-expr": {
+      "patterns": [
+        { "match": "(∪|∩|∖|×|⊆|⊂|∈|∉)", "name": "keyword.operator.set.oroboros" },
+        { "include": "#type-name" },
+        { "include": "#tags" },
+        { "include": "#range" },
+        { "include": "#set-former" },
+        { "include": "#qualified-name" },
+        { "include": "#identifier" }
+      ]
+    },
+
+    "type-expr": {
+      "patterns": [
+        { "include": "#range" },
+        { "include": "#type-name" },
+        { "include": "#tags" },
+        { "include": "#set-expr" },
+        {
+          "name": "meta.type-application.oroboros",
+          "begin": "(Array|Map|Buffer|Cell|Option|result\\.Result|prod|cell)\\(",
+          "beginCaptures": { "0": { "name": "entity.name.type.oroboros" } },
+          "end": "\\)",
+          "endCaptures": { "0": { "name": "punctuation.definition.type.end.oroboros" } },
+          "patterns": [
+            { "include": "#type-expr" },
+            { "include": "#range" },
+            { "include": "#identifier" },
+            { "include": "#literal" },
+            { "include": "#operators" }
+          ]
+        }
+      ]
+    },
+
+    "type-name": {
+      "name": "entity.name.type.oroboros",
+      "match": "\\b(Int|F64|f64|Bool|String|Any|error|num|word|Array|Map|Buffer|Cell|Option|prod|result|byte|rune|char|jint)\\b"
+    },
+
+    "range": {
+      "name": "meta.range.oroboros",
+      "match": "(?:(-?\\d+|-?\\d+\\s*\\^\\s*\\d+|\\+inf|-inf))(\\.\\.)(-?\\d+|-?\\d+\\s*\\^\\s*\\d+|\\+inf|-inf)",
+      "captures": {
+        "1": { "name": "constant.numeric.range-bound.oroboros" },
+        "2": { "name": "keyword.operator.range.oroboros" },
+        "3": { "name": "constant.numeric.range-bound.oroboros" }
+      }
+    },
+
+    "qualified-name": {
+      "name": "meta.qualified-name.oroboros",
+      "match": "([A-Za-z_$][A-Za-z0-9_\\-]*)(\\.[A-Za-z_$][A-Za-z0-9_\\-]*)+",
+      "captures": {
+        "1": { "name": "entity.name.type.module.oroboros" },
+        "2": { "name": "punctuation.accessor.member.oroboros" }
+      }
+    },
+
+    "identifier": {
+      "name": "variable.other.oroboros",
+      "match": "[A-Za-z_$][A-Za-z0-9_\\-]*"
+    },
+
+    "quoted-name": {
+      "name": "string.quoted.backtick.oroboros",
+      "begin": "`",
+      "end": "`",
+      "beginCaptures": { "0": { "name": "punctuation.definition.quoted-name.begin.oroboros" } },
+      "endCaptures": { "0": { "name": "punctuation.definition.quoted-name.end.oroboros" } }
+    },
+
+    "literal": {
+      "patterns": [
+        { "match": "(\\+inf|-inf)", "name": "constant.other.infinity.oroboros" },
+        { "match": "\\b\\d+\\.\\d+([eE][\\-+]?\\d+)?|\\b\\d+[eE][\\-+]?\\d+", "name": "constant.numeric.float.oroboros" },
+        { "match": "\\b(0[xX])?[0-9]+\\b", "name": "constant.numeric.integer.oroboros" },
+        { "match": "\\b(true|false)\\b", "name": "constant.language.boolean.oroboros" },
+        { "match": "\\bpow\\b", "name": "keyword.other.operator.oroboros" }
+      ]
+    },
+
+    "string": {
+      "name": "string.quoted.double.oroboros",
+      "begin": "\"",
+      "end": "\"",
+      "beginCaptures": { "0": { "name": "punctuation.definition.string.begin.oroboros" } },
+      "endCaptures": { "0": { "name": "punctuation.definition.string.end.oroboros" } },
+      "patterns": [
+        { "match": "\\\\(t|n|r|\\\"|\\\\|u\\{[0-9A-Fa-f]+\\})", "name": "constant.character.escape.oroboros" },
+        { "match": "\\$\\{[^}\\n]+\\}", "name": "variable.other.splice.oroboros" }
+      ]
+    },
+
+    "set-operators": {
+      "patterns": [
+        { "match": "(∈|∉|⊆|⊂|∪|∩|∖|×|∀|∃|⇒|⇔)", "name": "keyword.operator.set.oroboros" },
+        { "match": "\\b(in|notin|subset|cup|cap|A|E)=>?\\b|\\b<=>\\b", "name": "keyword.operator.set.oroboros" }
+      ]
+    },
+
+    "operators": {
+      "patterns": [
+        { "match": "(\\.\\.\\.)", "name": "keyword.operator.spread.oroboros" },
+        { "match": "(\\.\\.)", "name": "keyword.operator.range.oroboros" },
+        { "match": "(:=)", "name": "keyword.operator.assignment.oroboros" },
+        { "match": "(->)", "name": "keyword.operator.arrow.oroboros" },
+        { "match": "(==|!=|<=|>=)", "name": "keyword.operator.comparison.oroboros" },
+        { "match": "(<|>)", "name": "keyword.operator.comparison.oroboros" },
+        { "match": "(&&|\\|\\||!)", "name": "keyword.operator.logic.oroboros" },
+        { "match": "(\\^|\\*|/|%)", "name": "keyword.operator.arithmetic.oroboros" },
+        { "match": "(\\+\\+|\\+|-)", "name": "keyword.operator.arithmetic.oroboros" },
+        { "match": "(∈|∉|⊆|⊂|∀|∃|⇒|⇔|∪|∩|∖|×)", "name": "keyword.operator.math.oroboros" },
+        { "match": "(:|,|;)", "name": "punctuation.terminator.oroboros" }
+      ]
+    }
+  }
+}

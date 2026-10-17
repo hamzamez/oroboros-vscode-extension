@@ -1,0 +1,11 @@
+# build output
+*.vsix
+node_modules/
+.vscode-test/
+out/
+dist/
+# local tooling / scratch
+.test-out/
+*.log
+# editor / OS
+.DS_Store

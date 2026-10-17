@@ -1,0 +1,64 @@
+{
+  "name": "oroboros",
+  "displayName": "Oroboros",
+  "description": "Syntax highlighting for the Oroboros language (.oro) in Visual Studio Code",
+  "version": "0.1.0",
+  "publisher": "sapiens-ai",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "keywords": [
+    "oroboros",
+    "oro",
+    "syntax highlighting",
+    "textmate"
+  ],
+  "activationEvents": [
+    "onLanguage:oroboros"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "oroboros",
+        "aliases": [
+          "Oroboros",
+          "Oro"
+        ],
+        "extensions": [
+          ".oro"
+        ],
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./icons/oro-light.svg",
+          "dark": "./icons/oro-dark.svg"
+        },
+        "filenames": []
+      }
+    ],
+    "grammars": [
+      {
+        "language": "oroboros",
+        "scopeName": "source.oroboros",
+        "path": "./syntaxes/Oroboros.tmLanguage.json"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "echo nothing to package"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/example/oroboros-vscode.git"
+  },
+  "author": "",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/example/oroboros-vscode/issues"
+  },
+  "homepage": "https://github.com/example/oroboros-vscode#readme"
+}
