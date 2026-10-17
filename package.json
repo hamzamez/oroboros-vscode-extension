@@ -53,12 +53,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/example/oroboros-vscode.git"
+    "url": "git+https://github.com/hamzamez/oroboros-vscode-extension.git"
   },
-  "author": "",
+  "author": "Hamza Mezerreg",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/example/oroboros-vscode/issues"
+    "url": "https://github.com/hamzamez/oroboros-vscode-extension/issues"
   },
-  "homepage": "https://github.com/example/oroboros-vscode#readme"
+  "homepage": "https://github.com/hamzamez/oroboros-vscode-extension#readme"
 }
