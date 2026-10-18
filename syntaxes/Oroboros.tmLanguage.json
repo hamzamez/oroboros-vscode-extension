@@ -165,13 +165,13 @@
       "endCaptures": { "0": { "name": "punctuation.definition.parameters.end.oroboros" } },
       "patterns": [
         { "include": "#comment" },
+        { "match": "\\b(in|out|linear|inout)\\b", "name": "keyword.other.modifier.oroboros" },
+        { "match": "(∈|⊆)", "name": "keyword.operator.ownership.oroboros" },
         { "include": "#type-expr" },
         { "include": "#range" },
         { "include": "#set-expr" },
         { "include": "#tags" },
         { "include": "#literal" },
-        { "match": "\\b(in|out|linear|inout)\\b", "name": "keyword.other.modifier.oroboros" },
-        { "match": "(∈|⊆)", "name": "keyword.operator.ownership.oroboros" },
         { "include": "#type-name" },
         { "include": "#identifier" },
         { "match": "(,)", "name": "punctuation.terminator.oroboros" }
