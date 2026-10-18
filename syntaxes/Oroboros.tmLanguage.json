@@ -311,13 +311,8 @@
     "control": {
       "patterns": [
         {
-          "name": "meta.if.oroboros",
-          "begin": "\\b(if|else)\\b",
-          "beginCaptures": { "0": { "name": "keyword.control.if.oroboros" } },
-          "patterns": [
-            { "include": "#expression" },
-            { "include": "#block" }
-          ]
+          "match": "\\b(if|else)\\b",
+          "name": "keyword.control.if.oroboros"
         },
         {
           "match": "\\b(try|expect|assert|ignore|seq|let|and|or|not|cond)\\b",
@@ -327,7 +322,7 @@
           "name": "meta.lambda.oroboros",
           "begin": "(fn)\\b(?=\\s*[\\(a-zA-Z_$])",
           "beginCaptures": { "1": { "name": "keyword.other.lambda.oroboros" } },
-          "end": "(?=^\\s*(;|//)|^$)|(?<=\\})",
+          "end": "(?=$)",
           "patterns": [
             { "include": "#parameter-list" },
             { "include": "#result-list" },
@@ -344,15 +339,15 @@
       "name": "meta.loop.oroboros",
       "begin": "\\b(loop)\\b",
       "beginCaptures": { "1": { "name": "keyword.control.loop.oroboros" } },
-      "end": "(?=\\}\\s*$)|(?=$)",
+      "end": "(?=$)",
       "patterns": [
         { "include": "#comment" },
         { "match": "\\b(else|invariant|when)\\b", "name": "keyword.control.loop.oroboros" },
         { "match": "\\b(if)\\b", "name": "keyword.control.if.oroboros" },
+        { "match": "\\b(again)\\b", "name": "keyword.control.again.oroboros" },
         { "include": "#identifier" },
         { "include": "#literal" },
         { "include": "#operators" },
-        { "include": "#control" },
         { "match": "(->)", "name": "punctuation.control.oroboros" }
       ]
     },
@@ -361,7 +356,7 @@
       "name": "meta.case.oroboros",
       "begin": "\\b(case)\\b",
       "beginCaptures": { "1": { "name": "keyword.control.case.oroboros" } },
-      "end": "(?=\\s*$)",
+      "end": "(?=$)",
       "patterns": [
         { "include": "#comment" },
         { "include": "#tags" },
