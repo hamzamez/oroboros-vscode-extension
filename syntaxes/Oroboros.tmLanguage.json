@@ -141,6 +141,7 @@
       "patterns": [
         { "include": "#comment" },
         { "include": "#markers" },
+        { "match": "\\b(if|else|when|loop|case|try|expect|assert|again)\\b", "name": "keyword.control.oroboros" },
         { "include": "#identifier" },
         { "include": "#quoted-name" },
         { "include": "#parameter-list" },
@@ -292,6 +293,8 @@
       "patterns": [
         { "include": "#comment" },
         { "include": "#set-operators" },
+        { "match": "\\b(again)\\b", "name": "keyword.control.again.oroboros" },
+        { "match": "\\b(if|else|when)\\b", "name": "keyword.control.if.oroboros" },
         { "include": "#control" },
         { "include": "#loop" },
         { "include": "#case" },
