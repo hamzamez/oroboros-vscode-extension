@@ -315,7 +315,7 @@
           "name": "keyword.control.if.oroboros"
         },
         {
-          "match": "\\b(try|expect|assert|ignore|seq|let|and|or|not|cond)\\b",
+          "match": "\\b(try|expect|assert|ignore|and|or|not|cond)\\b",
           "name": "keyword.other.control.oroboros"
         },
         {
@@ -506,7 +506,7 @@
     "set-operators": {
       "patterns": [
         { "match": "(∈|∉|⊆|⊂|∪|∩|∖|×|∀|∃|⇒|⇔)", "name": "keyword.operator.set.oroboros" },
-        { "match": "\\b(in|notin|subset|cup|cap|A|E)=>?\\b|\\b<=>\\b", "name": "keyword.operator.set.oroboros" }
+        { "match": "\\\\cup|\\\\cap|\\\\notin|\\\\in|\\\\subseteq|\\\\subset|\\\\A|\\\\E|\\\\X|=>|<=>|(?=\\\\\\s)", "name": "keyword.operator.set.oroboros" }
       ]
     },
 
