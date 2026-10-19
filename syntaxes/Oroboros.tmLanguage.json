@@ -97,6 +97,7 @@
       "beginCaptures": { "1": { "name": "keyword.other.target-data.oroboros" } },
       "end": "(?=$)|(?=//)",
       "patterns": [
+        { "include": "#tags" },
         { "include": "#type-name" },
         { "include": "#identifier" },
         { "include": "#quoted-name" },
@@ -144,6 +145,7 @@
         { "include": "#comment" },
         { "include": "#markers" },
         { "match": "\\b(if|else|when|loop|case|try|expect|assert|again)\\b", "name": "keyword.control.oroboros" },
+        { "include": "#tags" },
         { "include": "#qualified-name" },
         { "include": "#identifier" },
         { "include": "#quoted-name" },
@@ -355,6 +357,7 @@
         { "match": "\\b(else|invariant|when)\\b", "name": "keyword.control.loop.oroboros" },
         { "match": "\\b(if)\\b", "name": "keyword.control.if.oroboros" },
         { "match": "\\b(again)\\b", "name": "keyword.control.again.oroboros" },
+        { "include": "#tags" },
         { "include": "#qualified-name" },
         { "include": "#identifier" },
         { "include": "#literal" },
@@ -455,12 +458,24 @@
     },
 
     "qualified-name": {
-      "name": "meta.qualified-name.oroboros",
-      "match": "([A-Za-z_$][A-Za-z0-9_\\-]*)(\\.[A-Za-z_$][A-Za-z0-9_\\-]*|\\.'[a-zA-Z_][a-zA-Z0-9_]*)+",
-      "captures": {
-        "1": { "name": "support.module.oroboros" },
-        "2": { "name": "punctuation.accessor.member.oroboros" }
-      }
+      "patterns": [
+        {
+          "name": "meta.qualified-name.oroboros",
+          "match": "([A-Za-z_$][A-Za-z0-9_\\-]*)(\\.'[a-zA-Z_][a-zA-Z0-9_]*)+",
+          "captures": {
+            "1": { "name": "support.module.oroboros" },
+            "2": { "name": "constant.other.tag.oroboros" }
+          }
+        },
+        {
+          "name": "meta.qualified-name.member.oroboros",
+          "match": "([A-Za-z_$][A-Za-z0-9_\\-]*)(\\.[A-Za-z_$][A-Za-z0-9_\\-]*)+",
+          "captures": {
+            "1": { "name": "support.module.oroboros" },
+            "2": { "name": "punctuation.accessor.member.oroboros" }
+          }
+        }
+      ]
     },
 
     "identifier": {

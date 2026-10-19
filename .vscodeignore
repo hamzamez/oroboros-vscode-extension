@@ -5,6 +5,7 @@ out/
 dist/
 .test-out/
 test.js
+tmp-*.oro
 .agnes/
 *.log
 *.vsix
