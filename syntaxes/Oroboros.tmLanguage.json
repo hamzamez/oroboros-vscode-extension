@@ -27,8 +27,9 @@
 
     "use": {
       "name": "meta.use.oroboros",
-      "match": "^\\s*(use)\\b",
-      "captures": { "1": { "name": "keyword.control.import.oroboros" } },
+      "begin": "^\\s*(use)\\b",
+      "beginCaptures": { "1": { "name": "keyword.control.import.oroboros" } },
+      "end": "(?=$)|(?=//)",
       "patterns": [
         { "include": "#use-path" }
       ]
@@ -51,6 +52,7 @@
       },
       "end": "(?=^\\s*})|^\\s*$",
       "patterns": [
+        { "include": "#use" },
         { "include": "#module-path" },
         { "include": "#block" },
         { "include": "#expression" },
@@ -64,6 +66,7 @@
       "beginCaptures": { "1": { "name": "keyword.module.oroboros" } },
       "end": "(?=^\\s*})|^\\s*$",
       "patterns": [
+        { "include": "#use" },
         { "include": "#identifier" },
         { "include": "#module-path" },
         { "include": "#block" },
@@ -272,6 +275,7 @@
         { "match": "\\b(loop|case)\\b", "name": "keyword.control.loop.oroboros" },
         { "match": "\\b(if|else|when)\\b", "name": "keyword.control.if.oroboros" },
         { "match": "\\b(true|false)\\b", "name": "constant.language.boolean.oroboros" },
+        { "include": "#qualified-result-type" },
         { "include": "#tags" },
         { "include": "#identifier" },
         { "include": "#indexing" },
@@ -294,6 +298,7 @@
       "patterns": [
         { "include": "#comment" },
         { "include": "#set-operators" },
+        { "include": "#use" },
         { "match": "\\b(again)\\b", "name": "keyword.control.again.oroboros" },
         { "match": "\\b(if|else|when)\\b", "name": "keyword.control.if.oroboros" },
         { "match": "\\b(true|false)\\b", "name": "constant.language.boolean.oroboros" },
@@ -305,6 +310,7 @@
         { "include": "#literal" },
         { "include": "#spread" },
         { "include": "#set-former" },
+        { "include": "#qualified-result-type" },
         { "include": "#set-expr" },
         { "include": "#type-expr" },
         { "include": "#qualified-name" },
@@ -415,23 +421,7 @@
         { "include": "#type-name" },
         { "include": "#tags" },
         { "include": "#set-expr" },
-        {
-          "name": "meta.qualified-result-type.oroboros",
-          "begin": "(result)\\.(Result)\\b",
-          "beginCaptures": {
-            "1": { "name": "variable.language.import-qualifier.oroboros" },
-            "2": { "name": "entity.name.type.oroboros" }
-          },
-          "end": "\\)",
-          "endCaptures": { "0": { "name": "punctuation.definition.type.end.oroboros" } },
-          "patterns": [
-            { "include": "#type-expr" },
-            { "include": "#range" },
-            { "include": "#identifier" },
-            { "include": "#literal" },
-            { "include": "#operators" }
-          ]
-        },
+        { "include": "#qualified-result-type" },
         {
           "name": "meta.type-application.oroboros",
           "begin": "(Array|Map|Buffer|Cell|Option|prod|cell)\\(",
@@ -447,6 +437,14 @@
           ]
         }
       ]
+    },
+
+    "qualified-result-type": {
+      "match": "(result)\\.(Result)\\b",
+      "captures": {
+        "1": { "name": "variable.language.import-qualifier.oroboros" },
+        "2": { "name": "entity.name.type.oroboros" }
+      }
     },
 
     "type-name": {
